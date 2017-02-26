@@ -1,0 +1,14 @@
+<div class="sentence" data-sentence-id="<%= sentence.id %>" data-processed="<%= sentence.processed?(@speed) %>">
+  <div class="sentence-detail">
+    <% unless sentence.processed?(@speed) %>
+      <p class="processing">Processing...</p>
+    <% end %>
+
+    <audio src="<%= sentence.filename(@speed) %>" controls preload="auto" class="player">
+      Your browser does not support the <code>audio</code> element. Please use a modern browser.
+    </audio>
+
+    <p class="japanese masked"><%= sentence.japanese %></p>
+    <p class="translation masked"><%= sentence.english %></p>
+  </div>
+</div>

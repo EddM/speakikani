@@ -1,0 +1,44 @@
+$spacing: 24px;
+$bounce-easing: cubic-bezier(0.680, -0.550, 0.265, 1.550);
+$transition-duration: 200ms;
+$button-prompt-size: 32px;
+$button-prompt-outer: $button-prompt-size + 12px;
+
+@keyframes fadeInOut {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.333; }
+  100% { opacity: 0.5; }
+}
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+@mixin button-prompt-style {
+  $border-width: 2px;
+
+  color: #27ae60;
+  height: $button-prompt-size;
+  line-height: ($button-prompt-size - ($border-width * 2));
+  background: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border: $border-width solid #27ae60;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.33);
+  text-transform: uppercase;
+  box-sizing: border-box;
+}
+
+@mixin button-prompt($content) {
+  content: $content;
+  @include button-prompt-style;
+}
+
+@import "main";
+@import "sentences";

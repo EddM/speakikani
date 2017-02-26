@@ -10,6 +10,10 @@ gem "puma", "~> 3.0"
 gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
 gem "aws-sdk", "~> 2"
+gem "sidekiq"
+
+gem "babel-transpiler"
+gem 'sprockets', github: 'rails/sprockets', branch: 'master'
 
 group :development, :test do
   gem "byebug", platform: :mri

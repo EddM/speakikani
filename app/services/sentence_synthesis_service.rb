@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SentenceSynthesisService < ServiceObject
-  SPEEDS = [:medium, :slow].freeze
+  SPEEDS = ["medium", "slow"].freeze
   BUCKET_NAME = "speakikani"
 
   attr_reader :speed, :sentence
@@ -25,6 +25,7 @@ class SentenceSynthesisService < ServiceObject
 
     # Update the sentence object with the public URL for the file on S3
     sentence.update_attributes attribute_name => public_url
+    SentenceStatusChannel.broadcast_to(sentence, sentence.as_json)
   end
 
   private
@@ -47,7 +48,10 @@ class SentenceSynthesisService < ServiceObject
     object_name = "sentences/#{@speed}/#{@sentence.identifier}.mp3"
 
     # upload it
-    s3_client.put_object bucket: BUCKET_NAME, key: object_name, body: File.open(filename, "rb").read
+    s3_client.put_object bucket: BUCKET_NAME,
+                         key: object_name,
+                         body: File.open(filename, "rb").read,
+                         acl: "public-read"
 
     # build its url
     "https://#{BUCKET_NAME}.s3.amazonaws.com/#{object_name}"
@@ -57,7 +61,7 @@ class SentenceSynthesisService < ServiceObject
     buckets = s3_client.list_buckets
     return if buckets.include? BUCKET_NAME
 
-    s3_client.create_bucket acl: "public-read", bucket: BUCKET_NAME
+    s3_client.create_bucket bucket: BUCKET_NAME
   end
 
   def generate_ssml(text, speed)

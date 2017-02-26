@@ -4,6 +4,6 @@ class SentenceSynthesisJob < ApplicationJob
   queue_as :default
 
   def perform(sentence, speed)
-    sentence.synthesize(speed)
+    SentenceSynthesisService.perform(sentence, speed)
   end
 end

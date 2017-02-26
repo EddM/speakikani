@@ -6,6 +6,16 @@ class Sentence < ApplicationRecord
 
   before_validation :set_identifier, unless: -> { identifier.present? }
 
+  scope :unprocessed, ->(speed) { where(:"#{speed}_filename" => nil) }
+
+  def processed?(speed)
+    filename(speed).present?
+  end
+
+  def filename(speed)
+    attributes["#{speed}_filename"].presence
+  end
+
   private
 
   def set_identifier
