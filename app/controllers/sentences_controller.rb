@@ -2,7 +2,7 @@
 
 class SentencesController < ApplicationController
   def index
-    @sentences = Sentence.order("RANDOM()").limit(10)
+    @sentences = find_sentences
     @speed = speed_param
 
     @sentences.select { |s| !s.processed?(@speed) }.each do |sentence|
@@ -18,6 +18,23 @@ class SentencesController < ApplicationController
   private
 
   def speed_param
-    params[:speed] || "slow"
+    SentenceSynthesisService::SPEEDS.include?(params[:speed]) ? params[:speed] : "slow"
+  end
+
+  def find_sentences
+    sentences = Sentence
+
+    if user
+      vocab_patterns = user.vocab_list.map { |vocab| "%#{vocab.remove("〜")}%" }
+      sentences = sentences.where("#{(["japanese LIKE ?"] * vocab_patterns.size).join(" OR ")}", *vocab_patterns)
+    end
+
+    sentences.order("RANDOM()").limit(10)
+  end
+
+  def user
+    return unless params[:wanikani_api_key]
+
+    User.new(params[:wanikani_api_key])
   end
 end

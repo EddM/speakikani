@@ -44,3 +44,60 @@ a {
     margin-bottom: 24px;
   }
 }
+
+.site-name {
+  margin-bottom: 8px;
+}
+
+.slogan {
+  margin: 0 0 48px 4px;
+  font-size: 24px;
+}
+
+.wanikani-login {
+  max-width: 600px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.22);
+  border-radius: 4px;
+  padding: 24px;
+  display: inline-block;
+  font-size: 15px;
+
+  .skip {
+    margin-top: 28px;
+    opacity: 0.666;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  input[type=text], input[type=submit] {
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    padding: 0 16px;
+    border-radius: 4px;
+  }
+
+  input[type=text] {
+    color: #333;
+    border: 1px solid #bbb;
+    color: #666;
+    font-family: "Monaco", "Courier", monospace;
+    margin-right: 14px;
+  }
+
+  input[type=submit] {
+    border: none;
+    background: #66BB6A;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background: #81C784;
+    }
+  }
+}
