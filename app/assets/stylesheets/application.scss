@@ -4,12 +4,6 @@ $transition-duration: 200ms;
 $button-prompt-size: 32px;
 $button-prompt-outer: $button-prompt-size + 12px;
 
-@keyframes fadeInOut {
-  0% { opacity: 0.5; }
-  50% { opacity: 0.333; }
-  100% { opacity: 0.5; }
-}
-
 @mixin transition($transition...) {
   -webkit-transition: $transition;
   -moz-transition: $transition;
@@ -40,5 +34,210 @@ $button-prompt-outer: $button-prompt-size + 12px;
   @include button-prompt-style;
 }
 
-@import "main";
-@import "sentences";
+@keyframes fadeInOut {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.333; }
+  100% { opacity: 0.5; }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ECF0F1;
+  margin: $spacing * 5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 32px;
+  color: #2c3e50;
+}
+
+a {
+  color: #9b59b6;
+}
+
+.intro {
+  font-size: 16px;
+  position: absolute;
+  top: 44px;
+  @include transition(opacity 200ms $bounce-easing, top 300ms $bounce-easing);
+
+  .button-prompt {
+    @include button-prompt-style;
+    display: inline-block;
+    padding: 0 12px;
+    margin: 0 12px;
+  }
+
+  &.disabled {
+    top: -32px;
+    opacity: 0;
+  }
+}
+
+.help {
+  font-size: 14px;
+  opacity: 0.5;
+  padding: $spacing;
+
+  p {
+    margin-bottom: $spacing;
+  }
+}
+
+.site-name {
+  margin-bottom: 8px;
+}
+
+.slogan {
+  margin: 0 0 ($spacing * 2) 4px;
+  font-size: $spacing;
+}
+
+.wanikani-login {
+  max-width: 600px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.22);
+  border-radius: 4px;
+  padding: $spacing;
+  display: inline-block;
+  font-size: 15px;
+
+  .skip {
+    margin-top: 28px;
+    opacity: 0.666;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  input[type=text], input[type=submit] {
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    padding: 0 16px;
+    border-radius: 4px;
+  }
+
+  input[type=text] {
+    color: #333;
+    border: 1px solid #bbb;
+    color: #666;
+    font-family: "Monaco", "Courier", monospace;
+    margin-right: 14px;
+  }
+
+  input[type=submit] {
+    border: none;
+    background: #66BB6A;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background: #81C784;
+    }
+  }
+}
+
+.sentence {
+  position: relative;
+
+  .sentence-detail {
+    opacity: 0.5;
+    padding: 48px;
+    margin-bottom: 48px;
+    width: auto;
+    max-width: 600px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.22);
+    border-radius: 4px;
+    @include transition(opacity $transition-duration);
+    pointer-events: none;
+
+    .player {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .japanese, .translation {
+      $dot-size: 12px;
+      $dot-outer-size: ($dot-size + 12px);
+
+      margin-bottom: 12px;
+      margin-left: $dot-outer-size;
+      padding-left: $dot-outer-size / 2;
+      margin-right: $button-prompt-outer;
+      position: relative;
+      @include transition(background-color ($transition-duration * 2), color ($transition-duration * 2));
+
+      &:before {
+        content: "";
+        display: inline-block;
+        width: $dot-size;
+        height: $dot-size;
+        border-radius: $dot-size / 2;
+        position: absolute;
+        top: 50%;
+        left: -$dot-outer-size;
+        transform: translateY(-50%);
+      }
+
+      &:last-child { margin-bottom: 0; }
+
+      &.masked {
+        $mask-color: #BDC3C7;
+
+        background: $mask-color;
+        color: $mask-color;
+      }
+    }
+
+    .japanese:before { background-color: #c0392b; }
+    .translation:before { background-color: #2980b9; }
+  }
+
+  &[data-processed=false] {
+    .sentence-detail {
+      animation: fadeInOut 1s infinite;
+
+      .player, .japanese, .translation { display: none; }
+    }
+  }
+
+  &.active {
+    .sentence-detail {
+      opacity: 1;
+      animation: none;
+      pointer-events: all;
+
+      .japanese.masked + .translation.masked {
+        opacity: 0.5;
+      }
+
+      .japanese.masked, .japanese:not(.masked) ~ .translation.masked {
+        &:after {
+          @include button-prompt("R");
+          position: absolute;
+          right: -$button-prompt-outer;
+          width: $button-prompt-size;
+        }
+      }
+    }
+
+    & + .sentence {
+      &:before {
+        @include button-prompt("Space");
+        position: absolute;
+        top: -($button-prompt-size / 2);
+        z-index: 2;
+        padding: 0 12px;
+        left: 24px;
+      }
+    }
+  }
+}
