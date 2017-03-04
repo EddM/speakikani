@@ -16,6 +16,10 @@ gem "httparty"
 gem "babel-transpiler"
 gem 'sprockets', github: 'rails/sprockets', branch: 'master'
 
+group :production do
+  gem "postgresql"
+end
+
 group :development, :test do
   gem "byebug", platform: :mri
 end
