@@ -11,6 +11,7 @@ gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
 gem "aws-sdk", "~> 2"
 gem "sidekiq"
+gem "httparty"
 
 gem "babel-transpiler"
 gem 'sprockets', github: 'rails/sprockets', branch: 'master'

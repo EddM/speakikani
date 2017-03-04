@@ -1,0 +1,18 @@
+<h1 class="site-name">Speakikani</h1>
+
+<p class="slogan">
+  Practice listening to Japanese!<br />
+  日本語を聞く練習！
+</p>
+
+<%= form_tag sentences_path, method: "get", class: "wanikani-login" do %>
+  <p>
+    <%= label_tag :wanikani_api_key, "WaniKani API Key:" %>
+    <%= text_field_tag :wanikani_api_key, "", size: 32 %>
+    <%= submit_tag "Log in", name: nil %>
+  </p>
+
+  <p class="skip">
+    Or, <%= link_to "skip login", sentences_path %> and use random sentences.
+  </p>
+<% end %>

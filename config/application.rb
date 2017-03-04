@@ -9,5 +9,6 @@ Bundler.require(*Rails.groups)
 module Speakikani
   class Application < Rails::Application
     config.active_job.queue_adapter = :sidekiq
+    config.autoload_paths << Rails.root.join("lib")
   end
 end

@@ -1,3 +1,8 @@
 <p class="intro">Press <span class="button-prompt">space</span> to begin listening practice.</p>
 
 <%= render @sentences %>
+
+<aside class="help">
+  <p>Noticed an error? <%= link_to "Tweet at me", "https://twitter.com/eddm", target: "_blank" %></p>
+  <p>Most sentences are from the <%= link_to "Tanaka Corpus", "http://tatoeba.org/eng/", target: "_blank" %></p>
+</aside>
