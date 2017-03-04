@@ -22,6 +22,7 @@ end
 
 group :development, :test do
   gem "byebug", platform: :mri
+  gem "dotenv-rails"
 end
 
 group :development do

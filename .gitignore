@@ -25,3 +25,4 @@ dump.rdb
 
 # Ignore secret stuff
 config/secrets.yml
+.env
