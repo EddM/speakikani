@@ -12,6 +12,7 @@ gem "uglifier", ">= 1.3.0"
 gem "aws-sdk", "~> 2"
 gem "sidekiq"
 gem "httparty"
+gem "progressbar"
 
 gem "babel-transpiler"
 gem 'sprockets', github: 'rails/sprockets', branch: 'master'
@@ -31,7 +32,6 @@ group :development do
   gem "listen", "~> 3.0.5"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
-  gem "progressbar"
   gem "rubocop-github"
 end
 
