@@ -5,7 +5,7 @@
   日本語を聞く練習！
 </p>
 
-<%= form_tag sentences_path, method: "get", class: "wanikani-login" do %>
+<%= form_tag sentences_url(protocol: Rails.env.production? ? :https : :http), method: "get", class: "wanikani-login" do %>
   <p>
     <%= label_tag :wanikani_api_key, "WaniKani API Key:" %>
     <%= text_field_tag :wanikani_api_key, "", size: 32 %>
